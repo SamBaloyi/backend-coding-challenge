@@ -13,7 +13,7 @@ function encryptMessage(message) {
 }
 
 function decryptMessage(encryptedMessage) {
-  const [ivHex, encrypted] = encryptedMessage;
+  const [ivHex, encrypted] = encryptedMessage.split(":");
   const iv = Buffer.from(ivHex, "hex");
 
   const decipher = crypto.createDecipheriv("aes-256-cbc", SECRET_KEY, iv);
