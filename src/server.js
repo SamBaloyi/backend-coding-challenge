@@ -1,13 +1,29 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const routes = require("./routes")
+// app.js - Main server file
 
-const app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
+const routes = require('./routes');
+const { setupMessageExpiry } = require('./services/messageService');
+const { testDecryptionFix } = require('./services/debugService');
 
-app.use(bodyParser.json())
+const app = express();
 
-app.use("/api", routes)
+// Middleware
+app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000
+// Routes
+app.use('/', routes);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+// Initialise message expiry
+setupMessageExpiry();
+
+// Run the test case for decrypt bug
+testDecryptionFix();
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Secure messaging API server running on port ${PORT}`);
+});
+
+module.exports = app;
