@@ -1,5 +1,3 @@
-// tests.js - Unit tests for the secure messaging API
-
 const request = require('supertest');
 const server = require('../server');
 const crypto = require('crypto');
